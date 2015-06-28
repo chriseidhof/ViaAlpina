@@ -33,6 +33,18 @@ class MapViewController: UIViewController {
         return stage.flatMap { parseKML($0.path) }
     }
     
+    lazy var locationManager: CLLocationManager = CLLocationManager()
+    
+    func authorize() {
+        if CLLocationManager.authorizationStatus() != .AuthorizedWhenInUse {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.authorize()
+    }
+    
     override func viewDidLoad() {
         guard var stage = stage else { return }
         var stages: [Stage] = []
@@ -40,18 +52,20 @@ class MapViewController: UIViewController {
             stages.append(stage)
             stage = stage.next
         }
-        let lines: [MKPolyline] = stages.map { stage in
-            let coords = parseKML(stage.path)?.coordinates ?? []
+        let lines: [(MKPolyline, String)] = stages.map { stage in
+            let parsed = parseKML(stage.path)
+            let coords = parsed?.coordinates ?? []
             var mapPoints: [MKMapPoint] = coords.map { (c: Coordinate) -> MKMapPoint in
                 MKMapPointForCoordinate(c.location)
             }
             
-            return MKPolyline(points: &mapPoints, count: mapPoints.count)
+            return (MKPolyline(points: &mapPoints, count: mapPoints.count), parsed?.name ?? "")
         }
 
-        lines.map(mapView.addOverlay)
+        lines.map { mapView.addOverlay($0.0) }
         
-        mapView.visibleMapRect = mapView.mapRectThatFits(lines[0].boundingMapRect)
+        navigationItem.title = lines[0].1
+        mapView.visibleMapRect = mapView.mapRectThatFits(lines[0].0.boundingMapRect)
         mapView.delegate = delegate
     }
     
