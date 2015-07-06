@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Master-->
@@ -34,7 +33,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyS-lV-0Xe">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="hybrid" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyS-lV-0Xe">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <animations/>
                             </mapView>
@@ -42,12 +41,19 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qyS-lV-0Xe" firstAttribute="top" secondItem="He9-Fw-MaR" secondAttribute="topMargin" id="Cai-bv-AL9"/>
-                            <constraint firstItem="qyS-lV-0Xe" firstAttribute="leading" secondItem="He9-Fw-MaR" secondAttribute="leadingMargin" id="Q8G-oi-KQc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qyS-lV-0Xe" secondAttribute="trailing" id="RtZ-iR-Yoy"/>
-                            <constraint firstItem="ZfD-FH-Ggm" firstAttribute="top" secondItem="qyS-lV-0Xe" secondAttribute="bottom" id="d3V-zY-BmJ"/>
+                            <constraint firstItem="qyS-lV-0Xe" firstAttribute="leading" secondItem="He9-Fw-MaR" secondAttribute="leading" id="8UG-3A-8bJ"/>
+                            <constraint firstItem="qyS-lV-0Xe" firstAttribute="top" secondItem="He9-Fw-MaR" secondAttribute="top" id="StW-qv-zeo"/>
+                            <constraint firstAttribute="trailing" secondItem="qyS-lV-0Xe" secondAttribute="trailing" id="Tlg-Iz-Ten"/>
+                            <constraint firstItem="ZfD-FH-Ggm" firstAttribute="top" secondItem="qyS-lV-0Xe" secondAttribute="bottom" id="TtT-im-pG2"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="sWz-0U-OYc">
+                        <barButtonItem key="rightBarButtonItem" title="Altitude" id="evO-JI-RBx">
+                            <connections>
+                                <segue destination="Qq5-gP-OiB" kind="show" id="f2m-06-byb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="qyS-lV-0Xe" id="Nau-7Y-dDj"/>
                     </connections>
@@ -56,10 +62,67 @@
             </objects>
             <point key="canvasLocation" x="880" y="-1032"/>
         </scene>
-        <!--Master-->
+        <!--Altitude View Controller-->
+        <scene sceneID="WHK-md-Ons">
+            <objects>
+                <viewController id="Qq5-gP-OiB" customClass="AltitudeViewController" customModule="ViaAlpina" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KW5-c3-GCF"/>
+                        <viewControllerLayoutGuide type="bottom" id="ymg-Ix-Qqw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1s2-LL-2S8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KMc-kt-gdP" customClass="AltitudeView" customModule="ViaAlpina" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="xm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHn-rs-UZQ">
+                                        <rect key="frame" x="0.0" y="515" width="142" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="xm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLv-kk-0h1">
+                                        <rect key="frame" x="0.0" y="0.0" width="142" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="vHn-rs-UZQ" firstAttribute="leading" secondItem="KMc-kt-gdP" secondAttribute="leading" id="N1S-YM-ubc"/>
+                                    <constraint firstAttribute="bottom" secondItem="vHn-rs-UZQ" secondAttribute="bottom" id="i3a-mj-M5q"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="KMc-kt-gdP" secondAttribute="trailing" id="50u-yL-XcH"/>
+                            <constraint firstItem="KMc-kt-gdP" firstAttribute="leading" secondItem="1s2-LL-2S8" secondAttribute="leading" id="5ir-hw-4oK"/>
+                            <constraint firstItem="ymg-Ix-Qqw" firstAttribute="top" secondItem="KMc-kt-gdP" secondAttribute="bottom" id="JFz-aO-Vye"/>
+                            <constraint firstItem="KMc-kt-gdP" firstAttribute="top" secondItem="KW5-c3-GCF" secondAttribute="bottom" id="KGH-05-MWU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="altitudeProfileView" destination="KMc-kt-gdP" id="p5a-6N-410"/>
+                        <outlet property="maxLabel" destination="FLv-kk-0h1" id="v67-Ia-sZb"/>
+                        <outlet property="minLabel" destination="vHn-rs-UZQ" id="QgQ-bI-Woz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dtB-S9-9ay" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1619" y="-1040"/>
+        </scene>
+        <!--Stages-->
         <scene sceneID="VgW-fR-Quf">
             <objects>
-                <tableViewController title="Master" id="pGg-6v-bdr" customClass="MasterViewController" customModule="ViaAlpina" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Stages" id="pGg-6v-bdr" customClass="MasterViewController" customModule="ViaAlpina" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mLL-gJ-YKr">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,13 +136,13 @@
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2pz-XF-uhl">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2pz-XF-uhl">
                                             <rect key="frame" x="15" y="0.0" width="550" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <animations/>
@@ -97,7 +160,7 @@
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Y6K-Cp-Qkv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="tQt-TN-PWz"/>
+                    <navigationItem key="navigationItem" title="Via Alpina - Red Route" id="tQt-TN-PWz"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>

@@ -27,12 +27,8 @@ class MapViewController: UIViewController {
     let delegate = MapDelegate()
     
     var stage: Stage?
-    let numNext = 5
-    
-    var kmlInfo: KMLInfo? {
-        return stage.flatMap { parseKML($0.path) }
-    }
-    
+    let numNext = 10
+        
     lazy var locationManager: CLLocationManager = CLLocationManager()
     
     func authorize() {
@@ -45,28 +41,50 @@ class MapViewController: UIViewController {
         self.authorize()
     }
     
+    struct Line {
+        let line: MKPolyline
+        let name: String
+        let distance: CLLocationDistance
+    }
+    
     override func viewDidLoad() {
         guard var stage = stage else { return }
         var stages: [Stage] = []
+        var theStage = stage
         for _ in 0..<numNext {
-            stages.append(stage)
-            stage = stage.next
+            stages.append(theStage)
+            guard let next = theStage.next else { break }
+            theStage = next
         }
-        let lines: [(MKPolyline, String)] = stages.map { stage in
-            let parsed = parseKML(stage.path)
+        let lines: [Line] = stages.map { (var stage) in
+            let parsed = stage.kmlInfo
             let coords = parsed?.coordinates ?? []
             var mapPoints: [MKMapPoint] = coords.map { (c: Coordinate) -> MKMapPoint in
-                MKMapPointForCoordinate(c.location)
+                MKMapPointForCoordinate(c.location.coordinate)
             }
+            let coords2 = coords.map { $0.location }
+            let distanceCoord = (distance: CLLocationDistance(0), lastLocation: coords2[0])
+            let distance = coords2.reduce(distanceCoord, combine: { (intermediate: (distance: CLLocationDistance, lastLocation: CLLocation), coord: CLLocation) in
+                return (distance: intermediate.distance + intermediate.lastLocation.distanceFromLocation(coord), coord)
+            }).distance
             
-            return (MKPolyline(points: &mapPoints, count: mapPoints.count), parsed?.name ?? "")
+            return Line(line: MKPolyline(points: &mapPoints, count: mapPoints.count), name: parsed?.name ?? "", distance: distance)
         }
 
-        lines.map { mapView.addOverlay($0.0) }
+        lines.map { mapView.addOverlay($0.line) }
         
-        navigationItem.title = lines[0].1
-        mapView.visibleMapRect = mapView.mapRectThatFits(lines[0].0.boundingMapRect)
+        let d = Int(round(lines[0].distance / 1000))
+                
+        navigationItem.title = "\(d)km " + lines[0].name
+        mapView.visibleMapRect = mapView.mapRectThatFits(lines[0].line.boundingMapRect)
         mapView.delegate = delegate
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let altitudeViewController = segue.destinationViewController as? AltitudeViewController,
+        let altitudes = stage?.kmlInfo?.altitudeProfile {
+            altitudeViewController.altitudes = altitudes
+        }
     }
     
 }

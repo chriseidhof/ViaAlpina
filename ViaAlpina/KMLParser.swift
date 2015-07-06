@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 
 struct Coordinate {
-    let location: CLLocationCoordinate2D
+    let location: CLLocation
     let altitudeInMeters: Int
 }
 
@@ -21,7 +21,7 @@ private func parseCoordinate(s: String) -> Coordinate? {
         let lat = Double(parts[1]),
         let altitude = Int(parts[2])
         else { return nil }
-    let loc = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    let loc = CLLocation(latitude: lat, longitude: lon)
     return Coordinate(location: loc, altitudeInMeters: altitude)
 }
 
@@ -78,7 +78,26 @@ func parseKML(filePath: String) -> KMLInfo? {
         let delegate = KMLDelegate()
         parser.delegate = delegate
         parser.parse()
-        return KMLInfo(name: delegate.nameString, coordinates: parseCoordinates(delegate.coordinates))
+        let name = delegate.nameString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return KMLInfo(name: name, coordinates: parseCoordinates(delegate.coordinates))
     }
     return nil
+}
+
+typealias AltitudeAndLocation = (distance: CLLocationDistance, altitude: Int, location: CLLocation)
+
+typealias AltitudeProfile = [AltitudeAndLocation]
+
+extension KMLInfo {
+    var altitudeProfile: AltitudeProfile {
+        let result = coordinates.reduce((coordinates[0], CLLocationDistance(0), AltitudeProfile())) { (intermediateResult, coord) in
+            let previousCoord = intermediateResult.0
+            var distances = intermediateResult.2
+            let distance = coord.location.distanceFromLocation(previousCoord.location)
+            let totalDistance = intermediateResult.1 + distance
+            distances.append((distance: totalDistance, altitude: coord.altitudeInMeters, location: coord.location))
+            return (coord, totalDistance, distances)
+        }
+        return result.2
+    }
 }

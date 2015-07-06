@@ -16,6 +16,10 @@
 		830A220A1B39A190002B3D64 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 830A22081B39A190002B3D64 /* data */; };
 		830A220B1B39A190002B3D64 /* kml in Resources */ = {isa = PBXBuildFile; fileRef = 830A22091B39A190002B3D64 /* kml */; };
 		830A22141B39B1B2002B3D64 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A22131B39B1B2002B3D64 /* MapViewController.swift */; };
+		833A11601B47D8C500219E23 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 833A115F1B47D8C500219E23 /* logo.png */; };
+		833A11621B47D90400219E23 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 833A11611B47D90400219E23 /* Icon@2x.png */; };
+		833A11641B47D99100219E23 /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833A11631B47D99100219E23 /* Stage.swift */; };
+		833A11661B498DD100219E23 /* AltitudeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833A11651B498DD100219E23 /* AltitudeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,10 @@
 		830A22091B39A190002B3D64 /* kml */ = {isa = PBXFileReference; lastKnownFileType = folder; path = kml; sourceTree = "<group>"; };
 		830A220C1B39A665002B3D64 /* ViaAlpina-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ViaAlpina-Bridging-Header.h"; sourceTree = "<group>"; };
 		830A22131B39B1B2002B3D64 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		833A115F1B47D8C500219E23 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		833A11611B47D90400219E23 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		833A11631B47D99100219E23 /* Stage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
+		833A11651B498DD100219E23 /* AltitudeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AltitudeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,11 +97,15 @@
 				830A21E61B39A175002B3D64 /* AppDelegate.swift */,
 				830A21E81B39A175002B3D64 /* MasterViewController.swift */,
 				830A21EC1B39A175002B3D64 /* Main.storyboard */,
+				833A11651B498DD100219E23 /* AltitudeViewController.swift */,
 				830A21EF1B39A175002B3D64 /* Images.xcassets */,
+				833A115F1B47D8C500219E23 /* logo.png */,
+				833A11611B47D90400219E23 /* Icon@2x.png */,
 				830A21E41B39A175002B3D64 /* Supporting Files */,
 				830A220C1B39A665002B3D64 /* ViaAlpina-Bridging-Header.h */,
 				830A22131B39B1B2002B3D64 /* MapViewController.swift */,
 				83052CBD1B407A1B007B445B /* KMLParser.swift */,
+				833A11631B47D99100219E23 /* Stage.swift */,
 			);
 			path = ViaAlpina;
 			sourceTree = "<group>";
@@ -211,6 +223,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				830A21EE1B39A175002B3D64 /* Main.storyboard in Resources */,
+				833A11621B47D90400219E23 /* Icon@2x.png in Resources */,
+				833A11601B47D8C500219E23 /* logo.png in Resources */,
 				830A220B1B39A190002B3D64 /* kml in Resources */,
 				830A220A1B39A190002B3D64 /* data in Resources */,
 				830A21F01B39A175002B3D64 /* Images.xcassets in Resources */,
@@ -233,8 +247,10 @@
 			files = (
 				830A21E91B39A175002B3D64 /* MasterViewController.swift in Sources */,
 				830A22141B39B1B2002B3D64 /* MapViewController.swift in Sources */,
+				833A11661B498DD100219E23 /* AltitudeViewController.swift in Sources */,
 				830A21E71B39A175002B3D64 /* AppDelegate.swift in Sources */,
 				83052CBE1B407A1B007B445B /* KMLParser.swift in Sources */,
+				833A11641B47D99100219E23 /* Stage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,22 +8,14 @@
 
 import UIKit
 
-struct Stage {
-    let number: Int
-    
-    var path: String {
-        return NSBundle.mainBundle().resourcePath?.stringByAppendingPathComponent("kml/\(number).kml") ?? ""
-
-    }
-    
-    var next: Stage {
-        return Stage(number: number+1)
-    }
-}
-
 class MasterViewController: UITableViewController {
 
-    var stages: [Stage] = (1...160).map { Stage(number: $0) }
+    var stages: [Stage] = (1...Stage.max).map { Stage(number: $0) }
+    
+    override func viewDidLoad() {
+        let attributes = [NSFontAttributeName: UIFont.systemFontOfSize(12)]
+        navigationController?.navigationBar.titleTextAttributes = attributes
+    }
 
 
     // MARK: - Segues
@@ -38,15 +30,11 @@ class MasterViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        let ip = NSIndexPath(forRow: 42, inSection: 0)
+        let ip = NSIndexPath(forRow: 50, inSection: 0)
         tableView.scrollToRowAtIndexPath(ip, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
 
     // MARK: - Table View
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stages.count
@@ -55,15 +43,9 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
-        let stage = stages[indexPath.row]
-        cell.textLabel!.text = "\(stage.number)"
+        var stage = stages[indexPath.row]
+        cell.textLabel?.text = stage.kmlInfo?.name
         return cell
     }
-
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-
 }
 
